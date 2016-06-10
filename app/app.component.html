@@ -1,0 +1,27 @@
+<div class="ContentSideSections">
+    <div class="Content100 overHidden TextShadow">
+        <span class="fontSize30 TextShadow orange mediumFont marginBottom20 dispBlock">GalileoNG</span>
+        <span class="defaultText dispTable">An experiment.</span>
+    </div>
+</div>
+
+<div class="ContentSideSections Implementation">   
+
+Seleccionado:<br>
+{{selectedFile | json}}<br>
+<br>
+Menú:<br>
+{{simpleStringify(menu)}}<br>
+
+<p-tree [value]="files" selectionMode="single" [(selection)]="selectedFile" (onNodeSelect)="nodeSelect($event)">
+    <template let-node>
+        <!-- input [(ngModel)]="node.label" type="text" style="width:100%"-->
+        <span>{{node.label}}
+        </span>
+    </template>    
+</p-tree>
+<p-contextMenu #menu [global]="false" [model]="items"></p-contextMenu>       
+
+
+   
+</div>
