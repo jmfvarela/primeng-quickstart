@@ -1,35 +1,69 @@
-import {Directive, Input} from '@angular/core';
-import {ContextMenu} from './contextmenu.mod';
-import {MenuItem} from 'primeng/primeng';
-import {ROUTER_DIRECTIVES} from '@angular/router';
+import {Component, Directive, Input} from '@angular/core';
+import {ContextMenuService} from './context-menu.service';
+import {Subject} from 'rxjs/Rx';
 
 @Directive({
   selector:'[context-menu]',
   host:{'(contextmenu)':'rightClicked($event)'}
 })
 export class ContextMenuDirective{
-  
-  //@ViewChild('menu') contextMenu: ContextMenu
-  
   @Input('context-menu') links;
-  
-  constructor(){ // private _contextMenuService:ContextMenuService
+  constructor(private _contextMenuService:ContextMenuService){
   }
-  
-  ngOnInit() {    
-    this.items = [
-        {label: 'Add entity', icon: 'fa-plus'}
-    ];
-  }
-  
-  items: MenuItem[];
-  
-
-  
-  
   rightClicked(event:MouseEvent){
-    //this._contextMenuService.show.next({event:event,obj:this.links});
-    event.preventDefault(); // to prevent the browser contextmenu
-    alert('hello world');
+    this._contextMenuService.show.next({event:event,obj:this.links});
+    event.preventDefault();
+  }
+}
+
+
+@Component({
+  selector:'context-menu-holder',
+  styles:[
+    '.container{width:150px;background-color:#eee}',
+    '.link{}','.link:hover{background-color:#abc}',
+    'ul{margin:0px;padding:0px;list-style-type: none}'
+  ],
+  host:{
+    '(document:click)':'clickedOutside()',
+    //'(click)':'clickInside()'
+  },
+  template:
+  `<div [ngStyle]="locationCss" class="container">
+      <ul>
+        <li (click)="link.subject.next(link.title)" class="link" *ngFor="let link of links">
+          {{link.title}}
+        </li>
+      </ul>
+    </div>
+  `
+})
+export class ContextMenuHolderComponent{
+  links = [];
+  isShown = false;
+  private mouseLocation :{left:number,top:number} = {left:0,top:0};
+  constructor(private _contextMenuService:ContextMenuService){
+    _contextMenuService.show.subscribe(e => this.showMenu(e.event,e.obj));
+  }
+  
+  get locationCss(){ 
+    return {
+      'position':'fixed',
+      'display':this.isShown ?  'block':'none';
+      left:this.mouseLocation.left + 'px',
+      top:this.mouseLocation.top + 'px',
+    };
+  }
+  clickedOutside(){
+    this.isShown= false
+  }
+  
+  showMenu(event,links){
+    this.isShown = true;
+    this.links = links;
+    this.mouseLocation = {
+      left:event.clientX,
+      top:event.clientY
+    }
   }
 }
