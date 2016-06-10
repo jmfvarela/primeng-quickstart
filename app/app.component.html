@@ -10,17 +10,15 @@
 Seleccionado:<br>
 {{selectedFile | json}}<br>
 <br>
-Menú:<br>
-{{simpleStringify(menu)}}<br>
 
 <p-tree [value]="files" selectionMode="single" [(selection)]="selectedFile" (onNodeSelect)="nodeSelect($event)">
     <template let-node>
         <!-- input [(ngModel)]="node.label" type="text" style="width:100%"-->
-        <span>{{node.label}}
+        <span context-menu (onNodeSelect)="nodeSelect($event)">{{node.label}}
         </span>
     </template>    
 </p-tree>
-<p-contextMenu #menu [global]="false" [model]="items"></p-contextMenu>       
+<!--p-contextMenu #menu [global]="false" [model]="items"></p-contextMenu-->       
 
 
    

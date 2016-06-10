@@ -1,4 +1,4 @@
-Proof of concept: PromeNG
+Proof of concept: PrimeNG
 Based in: https://github.com/primefaces/primeng-quickstart
 
 # Requirements

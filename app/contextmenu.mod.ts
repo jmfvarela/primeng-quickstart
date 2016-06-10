@@ -123,7 +123,8 @@ export class ContextMenu implements AfterViewInit,OnDestroy {
         });
         
         this.documentRightClickListener = this.renderer.listenGlobal('body', 'contextmenu', (event) => {
-            this.show(event);
+            console.log(event);
+            this.show(event);            
             event.preventDefault();
         });
     }
