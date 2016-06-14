@@ -49,7 +49,7 @@ export class ContextMenuHolderComponent{
   get locationCss(){ 
     return {
       'position':'fixed',
-      'display':this.isShown ?  'block':'none';
+      'display':this.isShown ?  'block':'none',
       left:this.mouseLocation.left + 'px',
       top:this.mouseLocation.top + 'px',
     };
