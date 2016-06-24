@@ -13,12 +13,12 @@ import {NodesService} from './services/nodeservice';
     <div class="ContentSideSections Implementation"> 
         <context-menu-holder></context-menu-holder>  
         Nodo seleccionado: {{selectedNode?.label}} <br>
-        Acción de contexto: {{actionContextMenuSelected}}<br>
+        Acción de contexto: {{lastRightClick}} {{actionContextMenuSelected}}<br>
         <br>
         <p-tree [value]="nodes" selectionMode="single" [(selection)]="selectedNode" (onNodeSelect)="nodeSelect($event)">
             <template let-node>
                 <!-- input [(ngModel)]="node.label" type="text" style="width:100%"-->
-                <span [context-menu]="node.links" (onNodeSelect)="nodeSelect($event)">{{node.label}}
+                <span [context-menu]="node.links" (onNodeSelect)="nodeSelect($event)" (contextmenu)="rightClick(node)">{{node.label}}
                 </span>
             </template>    
         </p-tree>
@@ -48,6 +48,13 @@ export class AppComponent {
     nodeSelect(event) {
     } 
     
+    lastRightClick;
+
+    rightClick(node) {
+        this.lastRightClick = node.label;
+        this.actionContextMenuSelected = "";
+    } 
+
     actionContextMenuSelected; 
 
     actionContextMenu(action){
