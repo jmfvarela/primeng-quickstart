@@ -13,7 +13,7 @@ import {NodesService} from './services/nodeservice';
     <div class="ContentSideSections Implementation"> 
         <context-menu-holder></context-menu-holder>  
         Nodo seleccionado: {{selectedNode?.label}} <br>
-        Acción de contexto: {{lastRightClick}} {{actionContextMenuSelected}}<br>
+        Acción de contexto: {{lastNodeRightClick?.label}} {{actionContextMenuSelected}}<br>
         <br>
         <p-tree [value]="nodes" selectionMode="single" [(selection)]="selectedNode" (onNodeSelect)="nodeSelect($event)">
             <template let-node>
@@ -46,12 +46,13 @@ export class AppComponent {
     }
     
     nodeSelect(event) {
+        this.nodes.push();
     } 
     
-    lastRightClick;
+    lastNodeRightClick;
 
     rightClick(node) {
-        this.lastRightClick = node.label;
+        this.lastNodeRightClick = node;
         this.actionContextMenuSelected = "";
     } 
 
@@ -59,6 +60,12 @@ export class AppComponent {
 
     actionContextMenu(action){
         this.actionContextMenuSelected = action;
+
+        if (action=="new") {
+            this.lastNodeRightClick.children.push({"label": "new", "icon": "fa-file-code-o", "data": "", "links": []});
+        }
+        else if (action=="delete") {
+        }
     }
 
 }

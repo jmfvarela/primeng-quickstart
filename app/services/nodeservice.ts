@@ -33,33 +33,40 @@ export class NodesService {
             "links": linksFolder,
             "children": [
                 {"label": "Usuarios", "icon": "fa-file-code-o", "data": "", "links": linksLeaf},
-                {"label": "Roles", "icon": "fa-file-code-o", "data": "", "links": linksLeaf}]
+                {"label": "Roles", "icon": "fa-file-code-o", "data": "", "links": []}]
         },{
             "label": "Pantallas",
             "data": "",
             "expandedIcon": "fa-folder-open",
             "collapsedIcon": "fa-folder",
-            "links": linksFolder,
+            "links": [],
             "children": [
-                {"label": "Usuarios", "icon": "fa-file-code-o", "data": "", "links": linksLeaf},
-                {"label": "Roles", "icon": "fa-file-code-o", "data": "", "links": linksLeaf}]
+                {"label": "Usuarios", "icon": "fa-file-code-o", "data": "", "links": []},
+                {"label": "Roles", "icon": "fa-file-code-o", "data": "", "links": []}]
+        },{
+            "label": "Componentes",
+            "data": "",
+            "expandedIcon": "fa-folder-open",
+            "collapsedIcon": "fa-folder",
+            "links": [],
+            "children": []
         },{
             "label": "Servicios",
             "data": "",
             "expandedIcon": "fa-folder-open",
             "collapsedIcon": "fa-folder",
-            "links": linksFolder,
+            "links": [],
             "children": [
-                {"label": "Administración", "icon": "fa-file-code-o", "data": "", "links": linksLeaf}]
+                {"label": "Administración", "icon": "fa-file-code-o", "data": "", "links": []}]
         },{
             "label": "Entidades",
             "data": "",
             "expandedIcon": "fa-folder-open",
             "collapsedIcon": "fa-folder",
-            "links": linksFolder,
+            "links": [],
             "children": [
-                {"label": "Usuario", "icon": "fa-file-code-o", "data": "", "links": linksLeaf},
-                {"label": "Rol", "icon": "fa-file-code-o", "data": "", "links": linksLeaf}]
+                {"label": "Usuario", "icon": "fa-file-code-o", "data": "", "links": []},
+                {"label": "Rol", "icon": "fa-file-code-o", "data": "", "links": []}]
         }]; 
 
     }
