@@ -13,36 +13,52 @@ export class NodesService {
                     .toPromise()
                     .then(res => <Car[]> res.json().data)
                     .then(data => { return data; });*/
-        var links=[
+        var linksFolder=[
                 {title:'Nuevo',subject:new Subject()},
                 {title:'Nuevo grupo',subject:new Subject()},
                 {title:'Copiar',subject:new Subject()},
                 {title:'Cambiar nombre',subject:new Subject()},
                 {title:'Eliminar',subject:new Subject()}];
 
+        var linksLeaf=[
+                {title:'Copiar',subject:new Subject()},
+                {title:'Cambiar nombre',subject:new Subject()},
+                {title:'Eliminar',subject:new Subject()}];
+
         return [{
-            "label": "Menú",
+            "label": "Menú", 
             "data": "",
             "expandedIcon": "fa-folder-open",
             "collapsedIcon": "fa-folder",
-            "links": links
+            "links": linksFolder,
+            "children": [
+                {"label": "Usuarios", "icon": "fa-file-code-o", "data": "", "links": linksLeaf},
+                {"label": "Roles", "icon": "fa-file-code-o", "data": "", "links": linksLeaf}]
         },{
             "label": "Pantallas",
             "data": "",
             "expandedIcon": "fa-folder-open",
             "collapsedIcon": "fa-folder",
-            "links": links
+            "links": linksFolder,
+            "children": [
+                {"label": "Usuarios", "icon": "fa-file-code-o", "data": "", "links": linksLeaf},
+                {"label": "Roles", "icon": "fa-file-code-o", "data": "", "links": linksLeaf}]
         },{
             "label": "Servicios",
             "data": "",
             "expandedIcon": "fa-folder-open",
-            "collapsedIcon": "fa-folder"
+            "collapsedIcon": "fa-folder",
+            "children": [
+                {"label": "Administración", "icon": "fa-file-code-o", "data": ""}]
         },{
             "label": "Entidades",
             "data": "",
             "expandedIcon": "fa-folder-open",
             "collapsedIcon": "fa-folder",
-            "links": links
+            "links": linksFolder,
+            "children": [
+                {"label": "Usuario", "icon": "fa-file-code-o", "data": "", "links": linksLeaf},
+                {"label": "Rol", "icon": "fa-file-code-o", "data": "", "links": linksLeaf}]
         }]; 
 
     }

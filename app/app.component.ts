@@ -12,9 +12,6 @@ import {NodesService} from './services/nodeservice';
     template: `
     <div class="ContentSideSections Implementation"> 
         <context-menu-holder></context-menu-holder>  
-        Selected:<br>
-        {{selectedNode | json}}<br>
-        <br>
         {{firstRightClick}} {{secondRightClick}}
         <p-tree [value]="nodes" selectionMode="single" [(selection)]="selectedNode" (onNodeSelect)="nodeSelect($event)">
             <template let-node>
@@ -23,6 +20,9 @@ import {NodesService} from './services/nodeservice';
                 </span>
             </template>    
         </p-tree>
+        <br>
+        Selected:<br>
+        {{selectedNode | json}}<br>
     </div>
     `,
 	selector: 'my-app',
@@ -46,7 +46,7 @@ export class AppComponent {
     
     firstRightClick; 
     secondRightClick;
-    
+
     firstCallback(val){
         this.firstRightClick = val;
     }
