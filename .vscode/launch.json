@@ -11,9 +11,9 @@
             "name": "Launch localhost with sourcemaps",
             "type": "chrome",
             "request": "launch",
-            "url": "http://localhost/mypage.html",
-            "sourceMaps": true,
-            "webRoot": "wwwroot"
+            "url": "http://localhost:3000",
+            "webRoot": "${workspaceRoot}",
+            "sourceMaps": true
         },
         {
             "name": "Attach",

@@ -3,70 +3,52 @@ import {Tree, TreeNode} from 'primeng/primeng';
 
 import {HTTP_PROVIDERS} from '@angular/http';
 
-import {ContextMenuDirective, ContextMenuHolderComponent} from './contextmenudirective';
+import {ContextMenuDirective, ContextMenuHolderComponent} from './components/contextmenudirective';
 import {Subject} from 'rxjs/Rx';
 
+import {NodesService} from './services/nodeservice';
 
 @Component({
-	templateUrl: 'app/app.component.html',
+    template: `
+    <div class="ContentSideSections Implementation"> 
+        <context-menu-holder></context-menu-holder>  
+        Selected:<br>
+        {{selectedNode | json}}<br>
+        <br>
+        {{firstRightClick}} {{secondRightClick}}
+        <p-tree [value]="nodes" selectionMode="single" [(selection)]="selectedNode" (onNodeSelect)="nodeSelect($event)">
+            <template let-node>
+                <!-- input [(ngModel)]="node.label" type="text" style="width:100%"-->
+                <span [context-menu]="node.links" (onNodeSelect)="nodeSelect($event)">{{node.label}}
+                </span>
+            </template>    
+        </p-tree>
+    </div>
+    `,
 	selector: 'my-app',
     directives: [Tree,ContextMenuHolderComponent, ContextMenuDirective],
-	providers: [HTTP_PROVIDERS]
+	providers: [HTTP_PROVIDERS, NodesService]
 })
 export class AppComponent {
     
-    constructor() { }
+    nodes: TreeNode[];
+    selectedNode: TreeNode;
+
+    constructor(private nodesService:NodesService) { }
     
       ngOnInit() {
-        this.files = [];
-        this.files.push({
-            "label": "Entities",
-            "data": "links",
-            "expandedIcon": "fa-folder-open",
-            "collapsedIcon": "fa-folder"
-        },{
-            "label": "Other",
-            "data": "anotherLinks",
-            "expandedIcon": "fa-folder-open",
-            "collapsedIcon": "fa-folder"
-        });
-        
-        this.links = [
-        {title:'link a',subject:new Subject()},
-        {title:'link b',subject:new Subject()},
-        {title:'link c',subject:new Subject()}
-        ];
-        this.anotherLinks = [
-        {title:'link 1',subject:new Subject()},
-        {title:'link 2',subject:new Subject()},
-        {title:'link 3',subject:new Subject()}
-        ];
-        this.links.forEach(l => l.subject.subscribe(val=> this.firstCallback(val)));
-        this.anotherLinks.forEach(l => l.subject.subscribe(val=> this.secondCallback(val)));
+        this.nodes=this.nodesService.getNodes();
+        //this.links.forEach(l => l.subject.subscribe(val=> this.firstCallback(val)));
     }
     
-    files: TreeNode[];
-    selectedFile: TreeNode;
-        
     nodeSelect(event) {
-        //alert("nodeSelect: "+this.selectedFile.label);
-    }
-    
- 
+    } 
     
     firstRightClick; 
     secondRightClick;
-    links;
-    anotherLinks;
-    getLinks(val) {
-        if (val=="links") return this.links;       
-        else return this.anotherLinks;
-    }
+    
     firstCallback(val){
         this.firstRightClick = val;
-    }
-    secondCallback(val){
-        this.secondRightClick = val;
     }
 
 }

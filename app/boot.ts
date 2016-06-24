@@ -1,6 +1,6 @@
 import {bootstrap} from '@angular/platform-browser-dynamic';
 import {AppComponent} from './app.component';
-import {ContextMenuService} from './context-menu.service';
+import {ContextMenuService} from './services/context-menu.service';
 import 'rxjs/Rx';
 
 import {provide} from '@angular/core';

@@ -1,5 +1,5 @@
 import {Component, Directive, Input} from '@angular/core';
-import {ContextMenuService} from './context-menu.service';
+import {ContextMenuService} from '../services/context-menu.service';
 import {Subject} from 'rxjs/Rx';
 
 @Directive({
@@ -7,11 +7,16 @@ import {Subject} from 'rxjs/Rx';
   host:{'(contextmenu)':'rightClicked($event)'}
 })
 export class ContextMenuDirective{
+
   @Input('context-menu') links;
+
   constructor(private _contextMenuService:ContextMenuService){
   }
+
   rightClicked(event:MouseEvent){
-    this._contextMenuService.show.next({event:event,obj:this.links});
+    if (this.links && this.links.length>0) {
+      this._contextMenuService.show.next({event:event,obj:this.links});
+    }
     event.preventDefault();
   }
 }
@@ -20,9 +25,9 @@ export class ContextMenuDirective{
 @Component({
   selector:'context-menu-holder',
   styles:[
-    '.container{width:150px;background-color:#eee}',
-    '.link{}','.link:hover{background-color:#abc}',
-    'ul{margin:0px;padding:0px;list-style-type: none}'
+    '.container{width:200px;background-color:#eee}',
+    '.link{cursor:pointer;padding:2px;}','.link:hover{background-color:#ddd}',
+    'ul{margin:0px;padding:2px;list-style-type: none}'
   ],
   host:{
     '(document:click)':'clickedOutside()',
