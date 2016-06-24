@@ -10,12 +10,12 @@ export class ContextMenuDirective{
 
   @Input('context-menu') links;
 
-  constructor(private _contextMenuService:ContextMenuService){
+  constructor(private contextMenuService:ContextMenuService){
   }
 
   rightClicked(event:MouseEvent){
     if (this.links && this.links.length>0) {
-      this._contextMenuService.show.next({event:event,obj:this.links});
+      this.contextMenuService.show.next({event:event,obj:this.links});
     }
     event.preventDefault();
   }
@@ -36,7 +36,7 @@ export class ContextMenuDirective{
   template:
   `<div [ngStyle]="locationCss" class="container">
       <ul>
-        <li (click)="link.subject.next(link.title)" class="link" *ngFor="let link of links">
+        <li (click)="link.subject.next(link)" class="link" *ngFor="let link of links">
           {{link.title}}
         </li>
       </ul>

@@ -14,16 +14,16 @@ export class NodesService {
                     .then(res => <Car[]> res.json().data)
                     .then(data => { return data; });*/
         var linksFolder=[
-                {title:'Nuevo',subject:new Subject()},
-                {title:'Nuevo grupo',subject:new Subject()},
-                {title:'Copiar',subject:new Subject()},
-                {title:'Cambiar nombre',subject:new Subject()},
-                {title:'Eliminar',subject:new Subject()}];
+                {title:'Nuevo', action:"new", subject:new Subject()},
+                {title:'Nuevo grupo', action:"newGroup", subject:new Subject()},
+                {title:'Copiar', action:"copy", subject:new Subject()},
+                {title:'Cambiar nombre', action:"rename", subject:new Subject()},
+                {title:'Eliminar', action:"delete", subject:new Subject()}];
 
         var linksLeaf=[
-                {title:'Copiar',subject:new Subject()},
-                {title:'Cambiar nombre',subject:new Subject()},
-                {title:'Eliminar',subject:new Subject()}];
+                {title:'Copiar', action:"copy", subject:new Subject()},
+                {title:'Cambiar nombre', action:"rename", subject:new Subject()},
+                {title:'Eliminar', action:"delete", subject:new Subject()}];
 
         return [{
             "label": "Menú", 
@@ -48,8 +48,9 @@ export class NodesService {
             "data": "",
             "expandedIcon": "fa-folder-open",
             "collapsedIcon": "fa-folder",
+            "links": linksFolder,
             "children": [
-                {"label": "Administración", "icon": "fa-file-code-o", "data": ""}]
+                {"label": "Administración", "icon": "fa-file-code-o", "data": "", "links": linksLeaf}]
         },{
             "label": "Entidades",
             "data": "",

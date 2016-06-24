@@ -12,7 +12,9 @@ import {NodesService} from './services/nodeservice';
     template: `
     <div class="ContentSideSections Implementation"> 
         <context-menu-holder></context-menu-holder>  
-        {{firstRightClick}} {{secondRightClick}}
+        Nodo seleccionado: {{selectedNode?.label}} <br>
+        Acción de contexto: {{actionContextMenuSelected}}<br>
+        <br>
         <p-tree [value]="nodes" selectionMode="single" [(selection)]="selectedNode" (onNodeSelect)="nodeSelect($event)">
             <template let-node>
                 <!-- input [(ngModel)]="node.label" type="text" style="width:100%"-->
@@ -20,9 +22,6 @@ import {NodesService} from './services/nodeservice';
                 </span>
             </template>    
         </p-tree>
-        <br>
-        Selected:<br>
-        {{selectedNode | json}}<br>
     </div>
     `,
 	selector: 'my-app',
@@ -31,24 +30,28 @@ import {NodesService} from './services/nodeservice';
 })
 export class AppComponent {
     
-    nodes: TreeNode[];
+    nodes; //: TreeNode[];
     selectedNode: TreeNode;
 
     constructor(private nodesService:NodesService) { }
     
       ngOnInit() {
         this.nodes=this.nodesService.getNodes();
-        //this.links.forEach(l => l.subject.subscribe(val=> this.firstCallback(val)));
+        this.nodes.forEach(node => {
+            node.links.forEach(link => link.subject.subscribe(val=> this.actionContextMenu(val.action)) )
+            node.children.forEach(child => 
+                child.links.forEach(link2 => link2.subject.subscribe(val2=> this.actionContextMenu(val2.action)) )
+            )
+        });
     }
     
     nodeSelect(event) {
     } 
     
-    firstRightClick; 
-    secondRightClick;
+    actionContextMenuSelected; 
 
-    firstCallback(val){
-        this.firstRightClick = val;
+    actionContextMenu(action){
+        this.actionContextMenuSelected = action;
     }
 
 }
